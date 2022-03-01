@@ -1,32 +1,32 @@
 import platform
-import gputil
+import GPUtil
 
 # GPU Information
 # GPU ID: Displays which gpu is installed on PCIE slot
 def gpu_id():
-    return gputil.id
+    return GPUtil.id
 
 # GPU Name
 def gpu_name():
-    return gputil.name
+    return GPUtil.name
 
 # GPU Utilization
 def gpu_usage():
-    return gputil.showUtilization()
+    return GPUtil.showUtilization()
 
 # GPU Free Memory
 # This wont show each gpu usage
 def gpu_free_mem():
-    return gputil.memoryFree
+    return GPUtil.memoryFree
 
 # GPU Used Memory
 def gpu_used_mem():
-    return gputil.memoryUsed
+    return GPUtil.memoryUsed
 
 # GPU Total Memory
 def gpu_mem():
-    return gputil.memoryTotal
+    return GPUtil.memoryTotal
 
 # GPU Tempature (measured in celsius)
 def gpu_temp():
-    return gputil.tempature
+    return GPUtil.temperature
