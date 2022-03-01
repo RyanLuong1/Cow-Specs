@@ -1,6 +1,6 @@
 import platform
 import psutil
-import gputil   # only works for Nvidia GPU
+import GPUtil   # only works for Nvidia GPU
 
 # Need to find GPU information
 # Need to find Motherboard information
@@ -61,8 +61,12 @@ def total_ram():
     return {round(psutil.virtual_memory().total/1000000000000, 2)}
 
 # Avaliable Ram
+<<<<<<< HEAD
 def avaliable_ram():
     return {round(psutil.virtual_memory().avaliable/1000000000000, 2)}
+=======
+{round(psutil.virtual_memory().available/1000000000000, 2)}
+>>>>>>> dd95877c4e2c6d41af1b262397040ef2bf568f70
 
 # Used Ram
 # {round(psutil.virtual_memory().used/1000000000000, 2)}
@@ -73,31 +77,35 @@ def memory_usage():
 
 
 # GPU Information
+
+# GPUs Declaration
+GPUs = GPUtil.getGPUs()
 # GPU ID: Displays which gpu is installed on PCIE slot
+
 def gpu_id():
-    return gputil.id
+    return GPUtil.id
 
 # GPU Name
 def gpu_name():
-    return gputil.name
+    return GPUtil.name
 
 # GPU Utilization
 def gpu_usage():
-    return gputil.showUtilization()
+    return GPUtil.showUtilization()
 
 # GPU Free Memory
 # This wont show each gpu usage
 def gpu_free_mem():
-    return gputil.memoryFree
+    return GPUtil.memoryFree
 
 # GPU Used Memory
 def gpu_used_mem():
-    return gputil.memoryUsed
+    return GPUtil.memoryUsed
 
 # GPU Total Memory
 def gpu_mem():
-    return gputil.memoryTotal
+    return GPUtil.memoryTotal
 
 # GPU Tempature (measured in celsius)
 def gpu_temp():
-    return gputil.tempature
+    return GPUtil.temperature
