@@ -1,6 +1,6 @@
 import platform
 import psutil
-import gputil   # only works for Nvidia GPU
+import GPUtil   # only works for Nvidia GPU
 
 # Need to find GPU information
 # Need to find Motherboard information
@@ -60,7 +60,7 @@ def cpu_usage():
 {round(psutil.virtual_memory().total/1000000000000, 2)}
 
 # Avaliable Ram
-{round(psutil.virtual_memory().avaliable/1000000000000, 2)}
+{round(psutil.virtual_memory().available/1000000000000, 2)}
 
 # Used Ram
 # {round(psutil.virtual_memory().used/1000000000000, 2)}
