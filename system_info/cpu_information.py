@@ -26,4 +26,5 @@ def cpu_usage():
     return {psutil.cpu_percent(interval = 1)}
 
 # CPU Tempature (measured in celsius)
-#cpu_temp =
+def cpu_temperature():
+    return {psutil.sensors_temperatures()}
