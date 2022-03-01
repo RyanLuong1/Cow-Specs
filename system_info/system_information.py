@@ -2,7 +2,7 @@ import platform
 import psutil
 import gputil   # only works for Nvidia GPU
 
-# Need to find GPU information 
+# Need to find GPU information
 # Need to find Motherboard information
 
 ## System information
@@ -10,39 +10,49 @@ import gputil   # only works for Nvidia GPU
 
 # Computer Network name
 # Example "DESKTOP-54OI004"
-comp_plat = {platform.node()}
+def computer_platform():
+    return {platform.node()}
 
 # Processor type
 # Example "Intel64 Family..."
-cpu_type = {platform.processor()}
+def cpu_type():
+    return {platform.processor()}
 
 # Operating System
-operating_system = {platform.system}
+def operating_system():
+    return {platform.system()}
 
 # Operating System Version
-operating_system_version = {platform.version()}
+def operating_system_version():
+    return {platform.version()}
 
 
 # CPU physical cores
-core_count0 = {psutil.cpu_count(logical = False)}
+def core_count0():
+    return {psutil.cpu_count(logical = False)}
 
 # CPU Logical cores (for Hyperthreading)
-core_count1 = {psutil.cpu_count(logical = True)}
+def core_count1():
+    return {psutil.cpu_count(logical = True)}
 
 # Current CPU Frequency
-cpu_freq = {psutil.cpu_freq().current}
+def cpu_freq():
+    return {psutil.cpu_freq().current}
 
 # Minimum CPU Frequency
-cpu_freq_min = {psutil.cpu_freq().min}
+def cpu_freq_min():
+    return {psutil.cpu_freq().min}
 
 # Maximum CPU Frequency
-cpu_fre_max = {psutil.cpu_freq().max}
+def cpu_fre_max():
+    return {psutil.cpu_freq().max}
 
 # Current CPU Untilization (Usage)
-cpu_usage = {psutil.cpu_percent(interval = 1)}
+def cpu_usage():
+    return {psutil.cpu_percent(interval = 1)}
 
 # CPU Tempature (measured in celsius)
-#cpu_temp = 
+#cpu_temp =
 
 
 # Total Ram installed on the system
@@ -61,23 +71,30 @@ cpu_usage = {psutil.cpu_percent(interval = 1)}
 
 # GPU Information
 # GPU ID: Displays which gpu is installed on PCIE slot
-gpu_id = gputil.id
+def gpu_id():
+    return gputil.id
 
 # GPU Name
-gpu_name = gputil.name
+def gpu_name():
+    return gputil.name
 
-# GPU Utilization 
-gpu_usage = gputil.showUtilization()
+# GPU Utilization
+def gpu_usage():
+    return gputil.showUtilization()
 
 # GPU Free Memory
 # This wont show each gpu usage
-gpu_free_mem = gputil.memoryFree
+def gpu_free_mem():
+    return gputil.memoryFree
 
 # GPU Used Memory
-gpu_used_mem = gputil.memoryUsed
+def gpu_used_mem():
+    return gputil.memoryUsed
 
 # GPU Total Memory
-gpu_mem = gputil.memoryTotal
+def gpu_mem():
+    return gputil.memoryTotal
 
 # GPU Tempature (measured in celsius)
-gpu_temp = gputil.tempature
+def gpu_temp():
+    return gputil.tempature
