@@ -2,7 +2,9 @@
 import os
 from pathlib import Path
 import sys
-
+from cpu_information import *
+from gpu_information import *
+from system_information import *
 #from PySide2.QtWidgets import QApplication, QWidget
 #from PySide2.QtCore import QFile
 #from PySide2.QtUiTools import QUiLoader
@@ -15,14 +17,15 @@ class Widget(QWidget):
         super(Widget, self).__init__()
         self.ui = uic.loadUi("form.ui", self)
         self.tree_view = self.ui.treeWidget
-        items = []
-        value = "100"
-        item = QtWidgets.QTreeWidgetItem(["Hardware"])
-        ext = value.split(".")[-1].upper()
-        child = QtWidgets.QTreeWidgetItem(["", ext])
-        item.addChild(child)
-        items.append(item)
-        self.tree_view.insertTopLevelItems(0, items)
+#        print(core_count0())
+#        self.tree_view.itemAt(0, 0).child(0).setText(1, "Bye")
+        self.tree_view.topLevelItem(1).child(0).setText(1, str(cpu_freq().pop()))
+        self.tree_view.topLevelItem(1).child(0).setText(2, str(cpu_freq_min().pop()))
+        self.tree_view.topLevelItem(1).child(0).setText(3, str(cpu_fre_max().pop()))
+#        self.tree_view.topLevelItem(1).child(0).setText(3, str(cpu_temperature().pop()))
+#        self.tree_view.topLevelItem(3).child(2).setText(3, str(gpu_temp().pop()))
+
+
 
 #    def load_ui(self):
 #        loader = QUiLoader()
