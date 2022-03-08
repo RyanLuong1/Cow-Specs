@@ -67,6 +67,11 @@
           <string>Temperature</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Fan Speed</string>
+         </property>
+        </item>
        </item>
        <item>
         <property name="text">
@@ -107,6 +112,16 @@
           <string>Temperature</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Memory Usage</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Utilization</string>
+         </property>
+        </item>
        </item>
        <item>
         <property name="text">
@@ -145,6 +160,16 @@
         <item>
          <property name="text">
           <string>MAC address</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>IPV4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>IPV6</string>
          </property>
         </item>
        </item>
