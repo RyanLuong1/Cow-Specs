@@ -35,6 +35,9 @@ def cpu_usage():
 # CPU Tempature (measured in celsius)
 def cpu_temperature():
     if (found_wmi): #use WMI by default
-        w = wmi.WMI(namespace ="root")
-        return w.Sensor() #w.Win32_TemperatureProbe()[0].CurrentReading
+        w = wmi.WMI(namespace ="root\OpenHardwareMonitor")
+        for sensor in w.Sensor():
+            if sensor.SensorType ==u'Temperature':
+                print(sensor.value)
+                return sensor.Value
     return psutil.sensors_temperatures()

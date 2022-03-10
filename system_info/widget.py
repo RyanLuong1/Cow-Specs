@@ -30,6 +30,7 @@ class Widget(QWidget):
     #        self.tree_view.topLevelItem(3).child(2).setText(3, str(gpu_temp().pop()))
 
     def text_display(self):
+        print(cpu_temperature())
         """Fixed Categories displayed"""
         hardwares = ["Motherboard", "CPU", "RAM", "GPU"]
         motherboard_items = ["Voltages", "Temperatures", "Fans", "Controls"]
