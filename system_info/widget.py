@@ -30,11 +30,20 @@ class Widget(QWidget):
     #        self.tree_view.topLevelItem(3).child(2).setText(3, str(gpu_temp().pop()))
 
     def text_display(self):
+        """Fixed Categories displayed"""
         hardwares = ["Motherboard", "CPU", "RAM", "GPU"]
         motherboard_items = ["Voltages", "Temperatures", "Fans", "Controls"]
         CPU_items = ["Clocks", "Temperatures", "Powers", "Memory"]
         RAM_items = ["Load", "Data"]
-        GPU_items = ["Clocks", "Temperatures", "Load", "Fans", "Controls", "Powers", "Data"]
+        GPU_items = [
+            "Clocks",
+            "Temperatures",
+            "Load",
+            "Fans",
+            "Controls",
+            "Powers",
+            "Data",
+        ]
         hardwares = ["Motherboard", "CPU", "GPU", "Storage", "Network", "RAM"]
         for hardware in hardwares[::-1]:
             parent = QtWidgets.QTreeWidgetItem([hardware])
@@ -43,8 +52,10 @@ class Widget(QWidget):
 #        self.tree_view.topLevelItem(1).child(0).setText(2, str(cpu_freq_min().pop()))
 #        self.tree_view.topLevelItem(1).child(0).setText(3, str(cpu_fre_max().pop()))
 
-    def core_program(self):
-        self.text_display()
+    def update_values(self):
+        """Update values constantly to display up to date information, store max and min for each category."""
+        while True:
+            pass  # placeholder, this is where we should put our values
 
 
 #    def load_ui(self):
@@ -59,8 +70,12 @@ class Widget(QWidget):
 if __name__ == "__main__":
     app = QApplication([])
     widget = Widget()
-    threadOne = threading.Thread(target=widget.text_display, args=(), daemon=True)
-    threadOne.start()
+    update_values_thread = threading.Thread(
+        target=widget.update_values, args=(), daemon=True
+    )
+
+    widget.text_display()
+    update_values_thread.start()
     widget.show()
-    threadOne.join()
+    
     sys.exit(app.exec_())
