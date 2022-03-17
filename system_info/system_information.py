@@ -4,25 +4,21 @@ from psutil._common import bytes2human
 
 ## System information
 
-# Total Memory installed on the system
-# rounds to the nearest decimal place (needs to be double checked)
+# Total Memory installed on the system (in GB)
 def total_ram():
-    return {round(psutil.virtual_memory().total/1000000000000, 2)}
+    return round(psutil.virtual_memory().total/1000000000)
 
-# Avaliable Memory
+# Avaliable Memory (in GB with 2 decimal places)
 def avaliable_ram():
-    return {round(psutil.virtual_memory().avaliable/1000000000000, 2)}
+    return round(psutil.virtual_memory().available/1000000000, 2)
 
-# Installed Memory 
-# {round(psutil.virtual_memory().used/1000000000000, 2)}
-
-# Memory Untilization
+# Memory Untilization (in percentage)
 def memory_usage():
-    return {psutil.virtual_memory().percent}
+    return psutil.virtual_memory().percent
 
 # Memory Temperature
 #def memory_temperature():
-#    return {psutil.virtual_memory. }  
+#    return psutil.virtual_memory  
 
 
 
@@ -34,7 +30,7 @@ def memory_usage():
 # Fan speed
 def fan_speed():
     if psutil.sensors_fans() > 0:
-        return {psutil.sensors_fans()}
+        return psutil.sensors_fans()
     else:
         return "Not available"
 
@@ -44,19 +40,19 @@ def fan_speed():
 
 # Returns IPv4 (32bit IP Address)
 def network_IPv4():
-    return {psutil.net_connections(kind='inet4')}
+    return psutil.net_connections(kind='inet4')
 
 # Returns IPv6 (64bit IP Address)
 def network_IPv6():
-    return {psutil.net_connections(kind='inet6')}
+    return psutil.net_connections(kind='inet6')
 
 # Returns IPv4 over TCP 
 def network_IPv4_TCP():
-    return {{psutil.net_connections(kind='tcp4')}}
+    return psutil.net_connections(kind='tcp4')
 
 # Returns IPv6 over TCP 
 def network_IPv6_TCP():
-    return {{psutil.net_connections(kind='tcp6')}}
+    return psutil.net_connections(kind='tcp6')
 
 
 ## Network Traffic
