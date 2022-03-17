@@ -56,9 +56,9 @@ class Widget(QWidget):
         child = QtWidgets.QTreeWidgetItem()
         child.setText(0, f'Temperature')
         self.tree_view.topLevelItem(1).addChild(child)
-        self.tree_view.topLevelItem(1).child(1).setText(1, "Hi")
-        self.tree_view.topLevelItem(1).child(1).setText(2, "Mo")
-        self.tree_view.topLevelItem(1).child(1).setText(3, "Bye")
+#        self.tree_view.topLevelItem(1).child(1).setText(1, "Hi")
+#        self.tree_view.topLevelItem(1).child(1).setText(2, "Mo")
+#        self.tree_view.topLevelItem(1).child(1).setText(3, "Bye")
         self.tree_view.topLevelItem(1).child(0).setText(1, str(core_count0()[0]))
 
     def update_values(self):
