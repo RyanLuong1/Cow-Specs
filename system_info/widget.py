@@ -53,21 +53,28 @@ class Widget(QWidget):
             child = QtWidgets.QTreeWidgetItem()
             child.setText(0, f'Core #{core}')
             self.tree_view.topLevelItem(1).addChild(child)
-        self.tree_view.topLevelItem(1).child(1).setText(1, "Hi")
-        self.tree_view.topLevelItem(1).child(1).setText(2, "Mo")
-        self.tree_view.topLevelItem(1).child(1).setText(3, "Bye")
+        child = QtWidgets.QTreeWidgetItem()
+        child.setText(0, f'Temperature')
+        self.tree_view.topLevelItem(1).addChild(child)
+#        self.tree_view.topLevelItem(1).child(1).setText(1, "Hi")
+#        self.tree_view.topLevelItem(1).child(1).setText(2, "Mo")
+#        self.tree_view.topLevelItem(1).child(1).setText(3, "Bye")
         self.tree_view.topLevelItem(1).child(0).setText(1, str(core_count0()[0]))
 
     def update_values(self):
         """Update values constantly to display up to date information, store max and min for each category."""
         #Initialize all necessary variables here before the loop
-        corecount = cpu_freq()
-
+        print(cpu_temperature())
         while True:
+            corecount = cpu_freq()
+            cpu_temp = cpu_temperature()
             print(len(corecount))
             for index in range(len(corecount)):
                 for j in range(1,4):
                     self.tree_view.topLevelItem(1).child(index).setText(j, str(corecount[index][j-1]))
+            cpu_children = self.tree_view.topLevelItem(1).childCount()
+            self.tree_view.topLevelItem(1).child(cpu_children - 1).setText(1, str(cpu_temp['k10temp'][0][1]))
+            print(cpu_children)
             # add more values to print out from here
 
             time.sleep(1)
