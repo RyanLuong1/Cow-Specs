@@ -10,7 +10,9 @@ except ImportError:
 
 # CPU physical cores
 def core_count0():
-    return {psutil.cpu_count(logical = False)}
+    cpu_count = psutil.cpu_count(logical = False)
+    cpu_list = [i for i in range(cpu_count)]
+    return cpu_list
 
 # CPU Logical cores (for Hyperthreading)
 def core_count1():
@@ -40,4 +42,4 @@ def cpu_temperature():
             if sensor.SensorType ==u'Temperature':
                 print(sensor.value)
                 return sensor.Value
-    return psutil.sensors_temperatures()
+#    return psutil.sensors_temperatures()
