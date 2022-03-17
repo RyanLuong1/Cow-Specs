@@ -10,7 +10,7 @@ except ImportError:
 
 # CPU physical cores
 def core_count0():
-    cpu_count = psutil.cpu_count(logical = False)
+    cpu_count = psutil.cpu_count(logical = True) #important to keep on True
     cpu_list = [i for i in range(cpu_count)]
     return cpu_list
 
