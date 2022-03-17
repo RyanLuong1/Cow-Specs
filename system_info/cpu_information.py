@@ -16,30 +16,23 @@ def core_count0():
 
 # CPU Logical cores (for Hyperthreading)
 def core_count1():
-    return {psutil.cpu_count(logical = True)}
+    return psutil.cpu_count(logical = True)
 
 # Current CPU Frequency
 def cpu_freq():
-    return {psutil.cpu_freq().current}
+    return psutil.cpu_freq(percpu=True)
 
-# Minimum CPU Frequency
-def cpu_freq_min():
-    return {psutil.cpu_freq().min}
-
-# Maximum CPU Frequency
-def cpu_fre_max():
-    return {psutil.cpu_freq().max}
+def extract_info_from_freq():
+    #we need to take out the information from cpu_freq(), it's all garbled up
+    cpu_freq_decoded = cpu_freq()
+    for index in range(len(cpu_freq_decoded)):
+        for j in range(0,3): #0 is current, 1 is min, 2 is max
+            print(cpu_freq_decoded[index][j]) #cpu_freq_decoded[index][j], index is core, j is temp type
 
 # Current CPU Untilization (Usage)
 def cpu_usage():
-    return {psutil.cpu_percent(interval = 1)}
+    return psutil.cpu_percent(interval = 1, percpu=True)
 
 # CPU Tempature (measured in celsius)
 def cpu_temperature():
-    if (found_wmi): #use WMI by default
-        w = wmi.WMI(namespace ="root\OpenHardwareMonitor")
-        for sensor in w.Sensor():
-            if sensor.SensorType ==u'Temperature':
-                print(sensor.value)
-                return sensor.Value
-#    return psutil.sensors_temperatures()
+    return psutil.sensors_temperatures()
