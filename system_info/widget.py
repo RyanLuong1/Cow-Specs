@@ -31,7 +31,6 @@ class Widget(QWidget):
     #        self.tree_view.topLevelItem(3).child(2).setText(3, str(gpu_temp().pop()))
 
     def text_display(self):
-        print(core_count0())
         """Fixed Categories displayed"""
         hardwares = ["Motherboard", "CPU", "RAM", "GPU"]
         motherboard_items = ["Voltages", "Temperatures", "Fans", "Controls"]
@@ -50,7 +49,12 @@ class Widget(QWidget):
         for hardware in hardwares[::-1]:
             parent = QtWidgets.QTreeWidgetItem([hardware])
             self.tree_view.insertTopLevelItem(0, parent)
-#        self.tree_view.topLevelItem(1).child(0).setText(1, str(cpu_freq().pop()))
+        for core in core_count0():
+            child = QtWidgets.QTreeWidgetItem()
+            child.setText(0, f'Core #{core}')
+            self.tree_view.topLevelItem(1).addChild(child)
+        print(gpu_name())
+#        self.tree_view.topLevelItem(1).child(0).setText(1, str(core_count0()[0]))
 #        self.tree_view.topLevelItem(1).child(0).setText(2, str(cpu_freq_min().pop()))
 #        self.tree_view.topLevelItem(1).child(0).setText(3, str(cpu_fre_max().pop()))
 
