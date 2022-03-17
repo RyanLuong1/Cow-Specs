@@ -1,9 +1,18 @@
 import platform
 import psutil
+import logging
+try:
+    import wmi #import WMI if utilizing windows
+    found_wmi = True
+except ImportError:
+    logging.warn('cpu_information.py: WMI is not found: Ignore if using Linux')
+    found_wmi = False
 
 # CPU physical cores
 def core_count0():
-    return {psutil.cpu_count(logical = False)}
+    cpu_count = psutil.cpu_count(logical = False)
+    cpu_list = [i for i in range(cpu_count)]
+    return cpu_list
 
 # CPU Logical cores (for Hyperthreading)
 def core_count1():
@@ -27,4 +36,10 @@ def cpu_usage():
 
 # CPU Tempature (measured in celsius)
 def cpu_temperature():
-    return {psutil.sensors_temperatures()}
+    if (found_wmi): #use WMI by default
+        w = wmi.WMI(namespace ="root\OpenHardwareMonitor")
+        for sensor in w.Sensor():
+            if sensor.SensorType ==u'Temperature':
+                print(sensor.value)
+                return sensor.Value
+#    return psutil.sensors_temperatures()

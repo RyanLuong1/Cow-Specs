@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import sys
 import threading
+import time
 from cpu_information import *
 from gpu_information import *
 from system_information import *
@@ -30,6 +31,7 @@ class Widget(QWidget):
     #        self.tree_view.topLevelItem(3).child(2).setText(3, str(gpu_temp().pop()))
 
     def text_display(self):
+        print(core_count0())
         """Fixed Categories displayed"""
         hardwares = ["Motherboard", "CPU", "RAM", "GPU"]
         motherboard_items = ["Voltages", "Temperatures", "Fans", "Controls"]
@@ -55,7 +57,9 @@ class Widget(QWidget):
     def update_values(self):
         """Update values constantly to display up to date information, store max and min for each category."""
         while True:
-            pass  # placeholder, this is where we should put our values
+            time.sleep(1)
+              # placeholder, this is where we should put our values
+
 
 
 #    def load_ui(self):
