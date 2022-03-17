@@ -21,7 +21,7 @@ from PyQt5 import uic, QtGui, QtWidgets
 class Widget(QWidget):
     def __init__(self):
         super(Widget, self).__init__()
-        self.ui = uic.loadUi("/home/ryan/group_8_project/system_info/form.ui", self)
+        self.ui = uic.loadUi("form.ui", self)
         self.tree_view = self.ui.treeWidget
 
     #        print(core_count0())
@@ -53,18 +53,24 @@ class Widget(QWidget):
             child = QtWidgets.QTreeWidgetItem()
             child.setText(0, f'Core #{core}')
             self.tree_view.topLevelItem(1).addChild(child)
-#        self.tree_view.topLevelItem(1).child(1).setText(1, "Hi")
-#        self.tree_view.topLevelItem(1).child(1).setText(2, "Mo")
-#        self.tree_view.topLevelItem(1).child(1).setText(3, "Bye")
-#        self.tree_view.topLevelItem(1).child(0).setText(1, str(core_count0()[0]))
-#        self.tree_view.topLevelItem(1).child(0).setText(2, str(cpu_freq_min().pop()))
-#        self.tree_view.topLevelItem(1).child(0).setText(3, str(cpu_fre_max().pop()))
+        self.tree_view.topLevelItem(1).child(1).setText(1, "Hi")
+        self.tree_view.topLevelItem(1).child(1).setText(2, "Mo")
+        self.tree_view.topLevelItem(1).child(1).setText(3, "Bye")
+        self.tree_view.topLevelItem(1).child(0).setText(1, str(core_count0()[0]))
 
     def update_values(self):
         """Update values constantly to display up to date information, store max and min for each category."""
+        #Initialize all necessary variables here before the loop
+        corecount = cpu_freq()
+
         while True:
+            print(len(corecount))
+            for index in range(len(corecount)):
+                for j in range(1,4):
+                    self.tree_view.topLevelItem(1).child(index).setText(j, str(corecount[index][j-1]))
+            # add more values to print out from here
+
             time.sleep(1)
-              # placeholder, this is where we should put our values
 
 
 

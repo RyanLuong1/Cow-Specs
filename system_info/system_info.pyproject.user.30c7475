@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2022-03-16T23:37:29. -->
+<!-- Written by QtCreator 6.0.2, 2022-03-15T14:33:04. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{11eb8d07-9b7f-4ade-9b2e-4b634b3bc0ea}</value>
+  <value type="QByteArray">{30c74751-b5f6-404d-8b0e-756d0b9c20cf}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -91,9 +91,9 @@
   <variable>ProjectExplorer.Project.Target.0</variable>
   <valuemap type="QVariantMap">
    <value type="QString" key="DeviceType">Desktop</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop Qt 6.2.3 MinGW 64-bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop Qt 6.2.3 MinGW 64-bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.qt6.623.win64_mingw_kit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop (x86-windows-msvc2017-pe-32bit)</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop (x86-windows-msvc2017-pe-32bit)</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{9bdfdcfd-269c-4860-946c-0a5467a48e09}</value>
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveBuildConfiguration">-1</value>
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="qlonglong" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
@@ -118,16 +118,16 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">C:/Users/brand/Documents/GitHub/group_8_project/system_info/widget.py</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/brand/Documents/GitHub/group_8_project/system_info/widget.py</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/brand/Documents/GitHub/group_8_project/system_info/widget.py</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">{93069e89-2110-4f71-9fc6-3de5ed2ac96d}</value>
-    <value type="QString" key="PythonEditor.RunConfiguation.Script">C:\Users\brand\Documents\GitHub\group_8_project\system_info\widget.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">C:/Users/Ryan/Desktop/group_8_project/system_info/widget.py</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">PythonEditor.RunConfiguration.C:/Users/Ryan/Desktop/group_8_project/system_info/widget.py</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/Ryan/Desktop/group_8_project/system_info/widget.py</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Interpreter">{c7eec9a1-8f8a-4cee-89dd-1b58574e4875}</value>
+    <value type="QString" key="PythonEditor.RunConfiguation.Script">C:\Users\Ryan\Desktop\group_8_project\system_info\widget.py</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/brand/Documents/GitHub/group_8_project/system_info</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">C:/Users/Ryan/Desktop/group_8_project/system_info</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
