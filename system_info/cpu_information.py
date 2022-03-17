@@ -15,8 +15,8 @@ def core_count0():
     return cpu_list
 
 # CPU Logical cores (for Hyperthreading)
-def core_count1():
-    return psutil.cpu_count(logical = True)
+#def core_count1():
+#    return psutil.cpu_count(logical = True)
 
 # Current cpu freq
 def cpu_freq():
