@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import pyqtgraph as pg
-
+import logging
 
 class graphing:
     def __init__(self):
@@ -8,17 +8,17 @@ class graphing:
         self._graph_instance.showGrid(x=True, y=True)
         self._graph_instance.addLegend()
         self._graph_instance.setLabel("left", "v_values", units="y")
-        self._graph_instance.setLabel("bottom", "h_values", units="s")
+        self._graph_instance.setLabel("bottom", "h_values", units="s")        
 
-    def setTitle(self, title, y_label, x_label, x_unit="x", y_unit="y"):
+    def setTitle(self, title, y_label, x_label = 'Time (in seconds)', x_unit="x", y_unit="y"):
         self._graph_instance.setWindowTitle(title)
         self._graph_instance.setLabel("left", y_label, units=y_unit)
         self._graph_instance.setLabel("bottom", x_label, units=x_unit)
 
     def def_graph(
         self,
-        x,
-        y,
+        x_list,
+        y_list,
         range_x,
         range_y,
         range_x_min=0,
@@ -29,9 +29,12 @@ class graphing:
     ):
         self._graph_instance.setYRange(range_y_min, range_y)
         self._graph_instance.setXRange(range_x_min, range_x)
-        currentLine = self._graph_instance.plot(
-            x, y, pen=color, symbol=symbolType, symbolBrush=0.2, name=symbolName
-        )
+        try:
+            self._graph_instance.plot(
+                x_list, y_list, pen=color, symbol=symbolType, symbolBrush=0.2, name=symbolName
+            )
+        except:
+            logging.ERROR("Graph.py: X and Y values must be passed as an array for plotting")
 
 
 # if __name__ == '__main__':

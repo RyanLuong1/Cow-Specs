@@ -1,18 +1,29 @@
 import platform
 import GPUtil
-
+import logging
 
 # GPU Information
-GPU = GPUtil.getGPUs()[0]
+try:
+    GPU = GPUtil.getGPUs()[0]
+except:
+    logging.warning("Only Nvidia Gpus are supported for GPU monitoring")
 
 # GPU Name
 def gpu_name():
-    return GPU.name 
+    try: 
+        return GPU.name 
+    except:
+        pass
 
 # GPU Utilization
 def gpu_usage():
-    return GPU.load*100
+    try: 
+        return GPU.load*100
+    except: pass
 
 # GPU Tempature (measured in celsius)
 def gpu_temp():
-    return GPU.temperature
+    try: 
+        return GPU.temperature
+    except:
+        pass
