@@ -6,6 +6,8 @@ from pathlib import Path
 import sys
 import threading
 import time
+from datetime import timedelta,datetime
+from graph import graphing
 from cpu_information import *
 from gpu_information import *
 from system_information import *
@@ -86,14 +88,38 @@ class Widget(QWidget):
         gpu_temp_max = 0
         memory_min = memory_usage()
         memory_max = 0
+        
+        start_time = time.time() #start tracking time for graphs
+######################################################
+        core_num = core_count0()
+        cpu_graph = [graphing() for _ in range(returnCores())] #initialize graphs for each core
+######################################################
+        #list of values for cpu temp
+        stored_cpu_temps = []
+        #list of values for gpu_temp
+        stored_gpu_temp = []
+        stored_gpu_temp.append(0)
 
+        #list of time values
+        stored_time = []
+        stored_time.append(0)
+######################################################        
         while True:
-            corecount = cpu_freq()
+            #time only needs to be appended once per loop
+            if (time.time()-start_time // 1) not in stored_time:
+                stored_time.append( time.time()-start_time // 1 ) #always return non-float in seconds
+           
+            
             cpu_temp = cpu_temperature()
+            corecount = cpu_freq()
             print(len(corecount))
             for index in range(len(corecount)):
+                cpu_graph[index].setTitle(f'Cpu temp of core_{index}', 'Temperature')
                 for j in range(1,4):
                     self.tree_view.topLevelItem(1).child(index).setText(j, str(corecount[index][j-1]))
+                stored_cpu_temps[index].append(corecount[index][3])
+                cpu_graph[index].def_graph(stored_cpu_temps[index], stored_time)
+
             cpu_children = self.tree_view.topLevelItem(1).childCount()
             self.tree_view.topLevelItem(1).child(cpu_children - 1).setText(1, str(cpu_temp['k10temp'][0][1]))
             print(cpu_children)
