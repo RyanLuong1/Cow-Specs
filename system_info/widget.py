@@ -6,7 +6,6 @@ from pathlib import Path
 import sys
 import threading
 import time
-import network_connections
 from cpu_information import *
 from gpu_information import *
 from system_information import *
@@ -27,25 +26,6 @@ class Widget(QWidget):
         super(Widget, self).__init__()
         self.ui = uic.loadUi("form.ui", self)
         self.tree_view = self.ui.treeWidget
-
-def get_network(network_function, local_address, remote_address):
-    for socket_connections in network_IPv4():
-        local_ip_and_port = ""
-        remote_ip_and_port = ""
-        for attribute in socket_connections[3]:
-            local_ip_and_port += str(attribute) + ":"
-        for attribute in socket_connections[4]:
-            remote_ip_and_port += str(attribute) +":"
-        local_ip_and_port = local_ip_and_port[:-1]
-        remote_ip_and_port = remote_ip_and_port[:-1]
-        local_address.append(local_ip_and_port)
-        remote_address.append(remote_ip_and_port)
-
-def insert_network_to_UI(address, row_index, child_index_network, child_index_address, self):
-    child = QtWidgets.QTreeWidgetItem()
-    child.setText(1, f'{address}')
-    self.tree_view.topLevel(row_index).child(child_index_network).child(child_index_address).addChild(child)
-
     #        print(core_count0())
     #        self.tree_view.itemAt(0, 0).child(0).setText(1, "Bye")
 
@@ -53,6 +33,22 @@ def insert_network_to_UI(address, row_index, child_index_network, child_index_ad
     #        self.tree_view.topLevelItem(3).child(2).setText(3, str(gpu_temp().pop()))
 
     def text_display(self):
+        def get_network(network_function, local_address, remote_address):
+            for socket_connections in network_function():
+                local_ip_and_port = ""
+                remote_ip_and_port = ""
+            for attribute in socket_connections[3]:
+                local_ip_and_port += str(attribute) + ":"
+            for attribute in socket_connections[4]:
+                remote_ip_and_port += str(attribute) +":"
+            local_ip_and_port = local_ip_and_port[:-1]
+            remote_ip_and_port = remote_ip_and_port[:-1]
+            local_address.append(local_ip_and_port)
+            remote_address.append(remote_ip_and_port)
+        def insert_network_to_UI(address, row_index, child_index_network, child_index_address, self):
+            child = QtWidgets.QTreeWidgetItem()
+            child.setText(1, f'{address}')
+            self.tree_view.topLevel(row_index).child(child_index_network).child(child_index_address).addChild(child)
         """Fixed Categories displayed"""
 #        motherboard_items = ["Voltages", "Temperatures", "Fans", "Controls"]
         CPU_items = ["Clocks", "Temperatures", "Powers", "Memory"]
@@ -88,53 +84,9 @@ def insert_network_to_UI(address, row_index, child_index_network, child_index_ad
             child.setText(0, f'Core #{core}')
             self.tree_view.topLevelItem(0).addChild(child)
         get_network(network_IPv4(), network_laddr_IPv4, network_raddr_IPv4)
-        # for socket_connections in network_IPv4():
-        #     local_ip_and_port = ""
-        #     remote_ip_and_port = ""
-        #     for attribute in socket_connections[3]:
-        #         local_ip_and_port += str(attribute) + ":"
-        #     for attribute in socket_connections[4]:
-        #         remote_ip_and_port += str(attribute) + ":"
-        #     local_ip_and_port = local_ip_and_port[:-1]
-        #     remote_ip_and_port = remote_ip_and_port[:-1]
-        #     network_laddr_IPv4.append(local_ip_and_port)
-        #     network_raddr_IPv4.append(remote_ip_and_port)
         get_network(network_IPv6(), network_laddr_IPv6, network_raddr_IPv6)
-        # for socket_connections in network_IPv6():
-        #     local_ip_and_port = ""
-        #     remote_ip_and_port = ""
-        #     for attribute in socket_connections[3]:
-        #         local_ip_and_port += str(attribute) + ":"
-        #     for attribute in socket_connections[4]:
-        #         remote_ip_and_port += str(attribute) + ":"
-        #     local_ip_and_port = local_ip_and_port[:-1]
-        #     remote_ip_and_port = remote_ip_and_port[:-1]
-        #     network_laddr_IPv6.append(local_ip_and_port)
-        #     network_raddr_IPv6.append(remote_ip_and_port)
         get_network(network_IPv4(), network_laddr_IPv4, network_raddr_IPv4)
-        # for socket_connections in network_IPv4_TCP():
-        #     local_ip_and_port = ""
-        #     remote_ip_and_port = ""
-        #     for attribute in socket_connections[3]:
-        #         local_ip_and_port += str(attribute) + ":"
-        #     for attribute in socket_connections[4]:
-        #         remote_ip_and_port += str(attribute) + ":"
-        #     local_ip_and_port = local_ip_and_port[:-1]
-        #     remote_ip_and_port = remote_ip_and_port[:-1]
-        #     network_laddr_IPv4_TCP.append(local_ip_and_port)
-        #     network_raddr_IPv4_TCP.append(remote_ip_and_port)
         get_network(network_IPv6(), network_laddr_IPv6, network_raddr_IPv6)
-        # for socket_connections in network_IPv6_TCP():
-        #     local_ip_and_port = ""
-        #     remote_ip_and_port = ""
-        #     for attribute in socket_connections[3]:
-        #         local_ip_and_port += str(attribute) + ":"
-        #     for attribute in socket_connections[4]:
-        #         remote_ip_and_port += str(attribute) + ":"
-        #     local_ip_and_port = local_ip_and_port[:-1]
-        #     remote_ip_and_port = remote_ip_and_port[:-1]
-        #     network_laddr_IPv6_TCP.append(local_ip_and_port)
-        #     network_raddr_IPv6_TCP.append(remote_ip_and_port)
         for item in network_items:
             child = QtWidgets.QTreeWidgetItem()
             child.setText(0, f'{item}')
@@ -145,45 +97,13 @@ def insert_network_to_UI(address, row_index, child_index_network, child_index_ad
             self.tree_view.topLevelItem(3).addChild(child)
         print(network_IPv6()[0])
         insert_network_to_UI(network_laddr_IPv4, 3, 0, 0, child)
-        # for address in network_laddr_IPv4:
-        #     child = QtWidgets.QTreeWidgetItem()
-        #     child.setText(1, f'{address}')
-        #     self.tree_view.topLevelItem(3).child(0).child(0).addChild(child)
         insert_network_to_UI(network_raddr_IPv4, 3, 0, 1, child)
-        # for address in network_raddr_IPv4:
-        #     child = QtWidgets.QTreeWidgetItem()
-        #     child.setText(1, f'{address}')
-        #     self.tree_view.topLevelItem(3).child(0).child(1).addChild(child)
         insert_network_to_UI(network_laddr_IPv6, 3, 1, 0, child)
-        # for address in network_laddr_IPv6:
-        #     child = QtWidgets.QTreeWidgetItem()
-        #     child.setText(1, f'{address}')
-        #     self.tree_view.topLevelItem(3).child(1).child(0).addChild(child)
         insert_network_to_UI(network_raddr_IPv6, 3, 1, 1, child)
-        # for address in network_raddr_IPv6:
-        #     child = QtWidgets.QTreeWidgetItem()
-        #     child.setText(1, f'{address}')
-        #     self.tree_view.topLevelItem(3).child(1).child(1).addChild(child)
         insert_network_to_UI(network_laddr_IPv4_TCP, 3, 2, 0, child)
-        # for address in network_laddr_IPv4_TCP:
-        #     child = QtWidgets.QTreeWidgetItem()
-        #     child.setText(1, f'{address}')
-        #     self.tree_view.topLevelItem(3).child(2).child(0).addChild(child)
         insert_network_to_UI(network_raddr_IPv4_TCP, 3, 2, 1, child)
-        # for address in network_raddr_IPv4_TCP:
-        #     child = QtWidgets.QTreeWidgetItem()
-        #     child.setText(1, f'{address}')
-        #     self.tree_view.topLevelItem(3).child(2).child(1).addChild(child)
         insert_network_to_UI(network_laddr_IPv6_TCP, 3, 3, 0, child)
-        # for address in network_laddr_IPv6_TCP:
-        #     child = QtWidgets.QTreeWidgetItem()
-        #     child.setText(1, f'{address}')
-        #     self.tree_view.topLevelItem(3).child(3).child(0).addChild(child)
         insert_network_to_UI(network_laddr_IPv6_TCP, 3, 3, 1, child)
-        # for address in network_raddr_IPv6_TCP:
-        #     child = QtWidgets.QTreeWidgetItem()
-        #     child.setText(1, f'{address}')
-        #     self.tree_view.topLevelItem(3).child(3).child(1).addChild(child)
 
         child = QtWidgets.QTreeWidgetItem()
         child.setText(0, f'Temperature')
