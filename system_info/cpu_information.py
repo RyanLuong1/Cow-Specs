@@ -45,7 +45,12 @@ def cpu_usage():
 
 # CPU Tempature (measured in celsius)
 def cpu_temperature():
-        cpu_temperature = psutil.sensors_temperatures()
+        try:
+            cpu_temperature = psutil.sensors_temperatures()
+        except:
+            temp = [random.randrange(1, 100) for _ in range(3)] #generate fake ones
+            temp.sort()
+            return temp 
         temp = []
         if (cpu_temperature == {}): #psutil didn't find any values
             temp = [random.randrange(1, 100) for _ in range(3)] #generate fake ones
