@@ -132,15 +132,30 @@ class Widget(QWidget):
         """Update values constantly to display up to date information, store max and min for each category."""
         #Initialize all necessary variables here before the loop
         # print(cpu_temperature())
-        gpu_min = gpu_usage()
-        gpu_max = 0
-        gpu_temp_min = gpu_temp()
-        gpu_temp_max = 0
-        memory_min = memory_usage()
-        memory_max = 0
 
         while True:
+            #CPU FREQ
             corecount = cpu_freq()
+            for index in range(len(corecount)):
+                for j in range(1, 2):
+                    max_cpu_freq = 0
+                    min_cpu_freq = 0
+                    current_cpu_freq = corecount[index][0]
+                    if self.tree_view.topLevelItem(0).child(index).text(2):
+                        min_cpu_freq = self.tree_view.topLevelItem(0).child(index).text(2)
+                    else:
+                        min_cpu_freq = current_cpu_freq
+                    if self.tree_view.topLevelItem(0).child(index).text(3):
+                        max_cpu_freq = self.tree_view.topLevelItem(0).child(index).text(3)
+                    else:
+                        max_cpu_freq = current_cpu_freq
+                    min_cpu_freq = min(float(min_cpu_freq), float(current_cpu_freq))
+                    max_cpu_freq = max(float(max_cpu_freq), float(current_cpu_freq))
+                    self.tree_view.topLevelItem(0).child(index).setText(1, str(current_cpu_freq))
+                    self.tree_view.topLevelItem(0).child(index).setText(2, str(min_cpu_freq))
+                    self.tree_view.topLevelItem(0).child(index).setText(3, str(max_cpu_freq))
+            
+            #CPU TEMP
             cpu_temp_index = self.tree_view.topLevelItem(0).childCount() - 1
             cpu_temp = cpu_temperature()
             min_cpu_temp = 0
@@ -160,6 +175,20 @@ class Widget(QWidget):
             self.tree_view.topLevelItem(0).child(cpu_temp_index).setText(2, str(min_cpu_temp))
             self.tree_view.topLevelItem(0).child(cpu_temp_index).setText(3, str(max_cpu_temp))
 
+            #GPU USAGE
+            gpu_temp_min = gpu_temp()
+            gpu_temp_max = 0
+            if gpu_temp_min > gpu_temp():
+                gpu_temp_min = gpu_temp()
+            if gpu_temp_max < gpu_temp():
+                gpu_temp_max = gpu_temp()
+            self.tree_view.topLevelItem(1).child(0).setText(1, str(gpu_temp()))
+            self.tree_view.topLevelItem(1).child(0).setText(2, str(gpu_temp_min))
+            self.tree_view.topLevelItem(1).child(0).setText(3, str(gpu_temp_max))
+
+            #GPU TEMP
+            gpu_min = gpu_usage()
+            gpu_max = 0
             if gpu_min > gpu_usage():
                 gpu_min = gpu_usage()
             if gpu_max < gpu_usage():
@@ -168,6 +197,9 @@ class Widget(QWidget):
             self.tree_view.topLevelItem(1).child(1).setText(2, str(gpu_min))
             self.tree_view.topLevelItem(1).child(1).setText(3, str(gpu_max))
 
+            #RAM USAGE
+            memory_min = memory_usage()
+            memory_max = 0
             if memory_min > memory_usage():
                 memory_min = memory_usage()
             if memory_max < memory_usage():
