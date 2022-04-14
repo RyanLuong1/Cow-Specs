@@ -1,6 +1,7 @@
 import platform
 import psutil
 import logging
+import cpuinfo
 try:
     import wmi #import WMI if utilizing windows
     found_wmi = True
@@ -43,3 +44,6 @@ def cpu_usage():
 # CPU Tempature (measured in celsius)
 def cpu_temperature():
     return psutil.sensors_temperatures()
+
+def cpu_name():
+    return cpuinfo.get_cpu_info()['brand_raw']
