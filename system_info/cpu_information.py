@@ -3,6 +3,7 @@ import psutil
 import logging
 import cpuinfo
 import random
+
 try:
     import wmi #import WMI if utilizing windows
     found_wmi = True
@@ -44,17 +45,19 @@ def cpu_usage():
 
 # CPU Tempature (measured in celsius)
 def cpu_temperature():
-    try:
         cpu_temperature = psutil.sensors_temperatures()
         temp = []
+        if (cpu_temperature == {}): #psutil didn't find any values
+            temp = [random.randrange(1, 100) for _ in range(3)] #generate fake ones
+            temp.sort()
+            return temp 
+        
         for key, val in cpu_temperature.items():
             for temperature in val:
                 temp.append(str(temperature[1]))
                 temp.append(str(temperature[2]))
                 break
-    except:
-        temp = random.sample(range(1, 100), 3).sort()
-    return temp
+        return temp
 
 def cpu_name():
     return cpuinfo.get_cpu_info()['brand_raw']
