@@ -141,23 +141,24 @@ class Widget(QWidget):
 
         while True:
             corecount = cpu_freq()
-            cpu_temp = cpu_temperature()
-            print(len(corecount))
-            for index in range(len(corecount)):
-                for j in range(1,4):
-                    self.tree_view.topLevelItem(0).child(index).setText(j, str(corecount[index][j-1]))
             cpu_temp_index = self.tree_view.topLevelItem(0).childCount() - 1
-            print(cpu_temp)
-            self.tree_view.topLevelItem(0).child(cpu_temp_index).setText(1, cpu_temp[0])
-
-            importlib.reload(gpu_information)
-            if gpu_temp_min > gpu_temp():
-                gpu_temp_min = gpu_temp()
-            if gpu_temp_max < gpu_temp():
-                gpu_temp_max = gpu_temp()
-            self.tree_view.topLevelItem(1).child(0).setText(1, str(gpu_temp()))
-            self.tree_view.topLevelItem(1).child(0).setText(2, str(gpu_temp_min))
-            self.tree_view.topLevelItem(1).child(0).setText(3, str(gpu_temp_max))
+            cpu_temp = cpu_temperature()
+            min_cpu_temp = 0
+            max_cpu_temp = 0
+            current_cpu_temp = cpu_temp[0]
+            if self.tree_view.topLevelItem(0).child(cpu_temp_index).text(2):
+                min_cpu_temp = self.tree_view.topLevelItem(0).child(cpu_temp_index).text(2)
+            else:
+                min_cpu_temp = current_cpu_temp
+            if self.tree_view.topLevelItem(0).child(cpu_temp_index).text(3):
+                max_cpu_temp = self.tree_view.topLevelItem(0).child(cpu_temp_index).text(3)
+            else:
+                min_cpu_temp = current_cpu_temp
+            min_cpu_temp = min(float(min_cpu_temp), float(current_cpu_temp))
+            max_cpu_temp = max(float(max_cpu_temp), float(current_cpu_temp))
+            self.tree_view.topLevelItem(0).child(cpu_temp_index).setText(1, str(current_cpu_temp))
+            self.tree_view.topLevelItem(0).child(cpu_temp_index).setText(2, str(min_cpu_temp))
+            self.tree_view.topLevelItem(0).child(cpu_temp_index).setText(3, str(max_cpu_temp))
 
             if gpu_min > gpu_usage():
                 gpu_min = gpu_usage()
