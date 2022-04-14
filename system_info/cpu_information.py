@@ -9,11 +9,15 @@ except ImportError:
     logging.warn('cpu_information.py: WMI is not found: Ignore if using Linux')
     found_wmi = False
 
-# CPU physical cores
+# CPU cores
 def core_count0():
     cpu_count = psutil.cpu_count(logical = True) #important to keep on True
     cpu_list = [i for i in range(cpu_count)]
     return cpu_list
+
+# return just how many cores there are without extra info
+def returnCores():
+    return psutil.cpu_count(logical=True)
 
 # CPU Logical cores (for Hyperthreading)
 #def core_count1():
