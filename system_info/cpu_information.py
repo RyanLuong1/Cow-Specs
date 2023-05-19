@@ -25,6 +25,9 @@ def returnCores():
 #def core_count1():
 #    return psutil.cpu_count(logical = True)
 
+def get_load():
+    return psutil.cpu_percent(None, True) #get cpu load per core
+
 # Current cpu freq
 def cpu_freq():
     '''Take out information from psutil.cpu_freq and return it as a 2d list, 

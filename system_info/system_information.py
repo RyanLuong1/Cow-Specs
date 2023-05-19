@@ -24,8 +24,15 @@ def memory_usage():
 
 # Storage information
 # Displays all partitions in system 
+def disk_count():
+    return len(psutil.disk_partitions(False))
 
-
+def disk_partition():
+    disks = psutil.disk_partitions(False)
+    disk_directory = []
+    for i in range(len(disks)):
+        disk_directory.append(disks[i][0])
+    return disk_directory
 
 # Fan speed
 def fan_speed():

@@ -2,13 +2,13 @@ import platform
 import GPUtil
 import logging
 import random
-
+from gpustat import *
 
 # GPU Information
 try:
     GPU = GPUtil.getGPUs()
 except:
-    logging.warning("Only Nvidia Gpus are supported for GPU monitoring")
+    logging.warning("GPU NOT DETECTED")
 
 # GPU Name
 def gpu_name():
@@ -19,7 +19,7 @@ def gpu_name():
 
 # GPU Utilization
 def gpu_usage():
-    try: 
+    try:
         return GPU[0].load*100 if GPU else random.randint(1, 100)
     except: pass
    

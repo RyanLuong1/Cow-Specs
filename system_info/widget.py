@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # This Python file uses the following encoding: utf-8
+# Big Thanks to Ryan, Michael, and Brandon for the idea and for helping me fix some bugs.
 from operator import truediv
 import os
 from pathlib import Path
@@ -19,7 +20,9 @@ from importlib import reload
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import QFile
 from PyQt5 import uic, QtGui, QtWidgets
+from multiprocessing import freeze_support # removed Process, since it's unused
 
+GB_TO_BYTE = 1073741824
 
 class Widget(QWidget):
     def __init__(self):
@@ -113,7 +116,7 @@ class Widget(QWidget):
 #        self.tree_view.topLevelItem(1).child(1).setText(1, "Hi")
 #        self.tree_view.topLevelItem(1).child(1).setText(2, "Mo")
 #        self.tree_view.topLevelItem(1).child(1).setText(3, "Bye")
-        self.tree_view.topLevelItem(0).child(0).setText(1, str(core_count0()[0]))
+        
 
         temperature = QtWidgets.QTreeWidgetItem()
         temperature.setText(0, "Temperature")
@@ -122,6 +125,13 @@ class Widget(QWidget):
         usage = QtWidgets.QTreeWidgetItem()
         usage.setText(0, "Usage")
         self.tree_view.topLevelItem(1).addChild(usage)      # "GPU"
+
+        disks = disk_count()
+        hdd_sdd = disk_partition()
+        for i in range(disks):
+            usage = QtWidgets.QTreeWidgetItem()
+            usage.setText(0, hdd_sdd[i])
+            self.tree_view.topLevelItem(2).addChild(usage)      # Partition
 
         usage = QtWidgets.QTreeWidgetItem()
         usage.setText(0, "Usage")
@@ -138,6 +148,10 @@ class Widget(QWidget):
         gpu_temp_max = 0
         memory_min = memory_usage()
         memory_max = 0
+        disks = disk_count()
+        cores = returnCores()
+        core_min = [0] * cores
+        core_max = [0] * cores
 
         while True:
             corecount = cpu_freq()
@@ -160,6 +174,26 @@ class Widget(QWidget):
             self.tree_view.topLevelItem(0).child(cpu_temp_index).setText(2, str(min_cpu_temp))
             self.tree_view.topLevelItem(0).child(cpu_temp_index).setText(3, str(max_cpu_temp))
 
+            #include CPU Frequencies here, CORE 0, CORE 1, Core 2
+            cpu_usage = get_load()
+            for core in range(cores):
+                core_current = cpu_usage[core]
+                if(core_current > core_max[core]):
+                    core_max[core] = core_current
+                if(core_min[core] > core_current):
+                    core_min[core] = core_current
+                self.tree_view.topLevelItem(0).child(core).setText(1, str(core_current))
+                self.tree_view.topLevelItem(0).child(core).setText(2, str(core_min[core]))
+                self.tree_view.topLevelItem(0).child(core).setText(3, str(core_max[core]))
+
+            if gpu_temp_min > gpu_temp():
+                gpu_temp_min = gpu_temp()
+            if gpu_temp_max < gpu_temp():
+                gpu_temp_max = gpu_temp()
+            self.tree_view.topLevelItem(1).child(0).setText(1, str(gpu_temp()))
+            self.tree_view.topLevelItem(1).child(0).setText(2, str(gpu_temp_min))
+            self.tree_view.topLevelItem(1).child(0).setText(3, str(gpu_temp_max))
+            
             if gpu_min > gpu_usage():
                 gpu_min = gpu_usage()
             if gpu_max < gpu_usage():
@@ -168,6 +202,13 @@ class Widget(QWidget):
             self.tree_view.topLevelItem(1).child(1).setText(2, str(gpu_min))
             self.tree_view.topLevelItem(1).child(1).setText(3, str(gpu_max))
 
+           
+            #hdd = disk_partition()
+            #self.tree_view.topLevelItem(2).child(0).setText(1, str(hdd[0]))
+            #self.tree_view.topLevelItem(2).child(0).setText(1, str(hdd[1]))
+            #self.tree_view.topLevelItem(2).child(0).setText(1, str(hdd[2]))
+
+
             if memory_min > memory_usage():
                 memory_min = memory_usage()
             if memory_max < memory_usage():
@@ -175,6 +216,14 @@ class Widget(QWidget):
             self.tree_view.topLevelItem(4).child(0).setText(1, str(memory_usage()))
             self.tree_view.topLevelItem(4).child(0).setText(2, str(memory_min))
             self.tree_view.topLevelItem(4).child(0).setText(3, str(memory_max))
+
+            hdd_sdd = disk_partition()
+            for i in range(disks):
+                current_disk = psutil.disk_usage(hdd_sdd[i])
+                self.tree_view.topLevelItem(2).child(i).setText(3, str(current_disk[0]//GB_TO_BYTE) + " GB") #Total
+                self.tree_view.topLevelItem(2).child(i).setText(1, str(current_disk[1]//GB_TO_BYTE) + " GB") #Used
+                self.tree_view.topLevelItem(2).child(i).setText(2, "Out Of") #No Minimum
+
             # add more values to print out from here
 
             time.sleep(1)
@@ -188,6 +237,7 @@ class Widget(QWidget):
 #        ui_file.close()
 
 if __name__ == "__main__":
+    freeze_support()
     app = QApplication([])
     widget = Widget()
     update_values_thread = threading.Thread(

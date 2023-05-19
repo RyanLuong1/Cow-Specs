@@ -1,0 +1,1 @@
+Go into the dist folder, and run widget.exe or run the shortcut "Widget.exe - Shortcut"
